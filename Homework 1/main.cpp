@@ -7,7 +7,6 @@ bool is_int_number(const char str[]);	//Проверяет, является л�
 int  to_int_number(char str[]);			//Если строка является целым десятичным числом, возвращает ее числовое значение
 bool is_bin_number(const char str[]);	//Проверяет, является ли строка двоичным числом
 int  bin_to_dec(char str[]);			//Если строка является двоичным числом, возвращает ее десятичное значение
-
 bool is_hex_number(const char str[]);	//Проверяет, является ли строка шестнадцатеричным числом
 int  hex_to_dec(char str[]);			//Если строка является шестнадцатеричным числом, возвращает ее десятичное значение*/
 
@@ -27,6 +26,7 @@ int  to_int_number(char str[]);
 bool is_bin_number(const char str[]);
 int  bin_to_dec(char str[]);
 bool is_hex_number(const char str[]);
+int  hex_to_dec(char str[]);
 
 void main()
 {
@@ -53,6 +53,7 @@ void main()
 	cout << "Строка: " << (is_bin_number(str) ? "" : "НЕ ") << "является двоичным числом" << endl;
 	if (is_bin_number(str))cout << "В десятичной системе: " << bin_to_dec(str) << endl;
 	cout << "Строка: " << (is_hex_number(str) ? "" : "НЕ ") << "является шестнадцатиричным числом" << endl;
+	if (is_hex_number(str))cout << "В десятичной системе: " << hex_to_dec(str) << endl;
 }
 void to_upper(char str[])
 {
@@ -143,11 +144,9 @@ int  bin_to_dec(char str[])
 
 	for (int i = 0; str[i]; razmer--, i++)
 	{
-		int stepen = 1; int itog = 1;
-		while (stepen != razmer)
-		{
-			itog *= 2; stepen++;
-		}
+		int itog = 1;
+		for (int stepen = 1; stepen != razmer; stepen++)itog *= 2;
+		
 		if (str[i] == '1')buffer += itog;
 	}
 	return(buffer);
@@ -156,7 +155,35 @@ bool is_hex_number(const char str[])
 {
 	for (int i = 0; str[i]; i++)
 	{
-		if (str[i] < '0' && str[i] > '9'&& str[i] != 'A')return(false);
+		if (str[i] < '0' || str[i] > '9' && str[i] != 'a' && str[i] !='A' && str[i] != 'b' && str[i] != 'B' && str[i] != 'c' && str[i] != 'C' &&
+			str[i] != 'd' && str[i] != 'D' && str[i] != 'e' && str[i] != 'E' && str[i] != 'f' && str[i] != 'F')return(false);
+		//if ((str[i] < '0' || str[i] > '9') && ((str[i] - 55) < 10 || (str[i] - 55) > 15))return(false);
+		//else if((str[i]-55)<10 || (str[i] - 55) > 15)return(false);
 	}
 	return(true);
+}
+int  hex_to_dec(char str[])
+{
+	int buffer = 0;
+	int razmer = strlen(str);
+
+	for (int i = 0; str[i]; razmer--, i++)
+	{
+		int itog = 1;
+		for (int stepen = 1; stepen != razmer; stepen++)itog *= 16;
+		
+		if (str[i] >= '0' && str[i] <= '9')
+		{
+			buffer += (str[i] - 48) * itog;
+		}
+		else if (str[i] >= 65 && str[i] <= 70)
+		{
+			buffer += (str[i] - 55) * itog;
+		}
+		else if (str[i] >= 97 && str[i] <= 102)
+		{
+			buffer += (str[i] - 87) * itog;
+		}
+	}
+	return(buffer);
 }

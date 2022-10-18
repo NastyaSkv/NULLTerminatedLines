@@ -54,6 +54,7 @@ void main()
 	if (is_bin_number(str))cout << "В десятичной системе: " << bin_to_dec(str) << endl;
 	cout << "Строка: " << (is_hex_number(str) ? "" : "НЕ ") << "является шестнадцатиричным числом" << endl;
 	if (is_hex_number(str))cout << "В десятичной системе: " << hex_to_dec(str) << endl;
+	
 }
 void to_upper(char str[])
 {

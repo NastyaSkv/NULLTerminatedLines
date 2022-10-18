@@ -1,10 +1,10 @@
+//NULLTerminatedLines
 #include<iostream>
 #include<Windows.h>
 using namespace std;
 using std::cin;
 using std::cout;
 using std::endl;
-
 
 int StringLength(const char str[]);
 void upper_case(char str[]);
@@ -19,64 +19,60 @@ void main()
 {
 	setlocale(LC_ALL, "");
 #ifdef EXAMPLE_1
-	//объявление строки - (1)
-	//char str[] = {'H', 'e', 'l', 'l', 'o', 0};   //в конце обязательно 0!
-	//объявление строки - (2)
+	//ASCII-символ с кодом 0 - '\0'
+//char str[] = { 'H', 'e', 'l', 'l', 'o', 0 };
 	char str[] = "Hello";
-	// str[] - строковая переменная
-	// "Hello" - строковая константа
+	//str[]   - строковая переменная
+	//"Hello" - строковая константа
 	cout << str << endl;
 	cout << typeid(str).name() << endl;
 	cout << typeid("Hello").name() << endl;
-#endif
-
+#endif // EXAMPLE_1
+	//for (int i = 0; i < 256; i++)cout << i << "\t" << char(i) << endl;
+	/*cout << (int)'A' << endl;
+	cout << (int)'a' << endl;
+	cout << 'A' - 'a' << endl;
+	cout << (int)'Ё' << endl;
+	cout << (int)'ё' << endl;*/
 	const int SIZE = 256;
-	char str[SIZE] = {};
+	char str[SIZE] = "Аргентина манит негра";
+	/*cout << (int)'\0' << endl;
+	cout << (int)'0' << endl;*/
 	cout << "Введите строку: ";
-	cin >> str;
+	//cin >> str;
 	SetConsoleCP(1251);
 	cin.getline(str, SIZE);
 	SetConsoleCP(866);
 	cout << str << endl;
-	cout << "Размер строки: " << StringLength(str) << endl; //это мы сами написали
-	cout << "Размер строки: " << strlen(str) << endl; //это встроенная ф-я
-	cout << "Размер строки в байтах: " << sizeof(str) << endl; 
-	upper_case(str);
-	cout << str << endl;
+	/*cout << "Длина строки: " << StringLength(str) << endl;
+	cout << "Длина строки: " << strlen(str) << endl;
+	cout << "Длина строки в Байтах: " << sizeof(str) << endl;
 	lower_case(str);
 	cout << str << endl;
 	shrink(str);
-	cout << str << endl;
-	cout << (is_palindrome(str)?"":"НЕ") << " является палиндромом" << endl;
+	cout << str << endl;*/
+	cout << "Строка " << (is_palindrome(str) ? "" : "НЕ ") << "является палиндромом" << endl;
 	cout << str << endl;
 }
 
 int StringLength(const char str[])
 {
+	//Принимает строку, и возвращает размер строки в символах
 	int i = 0;
-	//for (; str[i] != 0; i++) - мой вариант
-	for (; str[i]; i++);  //вариант О.А.
-	return(i);
+	for (; str[i]; i++);
+	return i;
 }
-
 void upper_case(char str[])
 {
-	//мой вариант
-	/*for (int i = 0; str[i]; i++)
-	{
-		str[i] = char(int(str[i]) - 32);
-		cout << str[i];
-	}*/
-
 	for (int i = 0; str[i]; i++)
 	{
-		/*if (str[i] >= 'a' && str[i] <= 'z')str[i] -= 32;
-		if(str[i] >= 'а' && str[i] <= 'я')str[i] -= 32;
-		if (str[i] == 'ё')str[i] = 'Ё';*/
+		/*if (str[i] >= 'a' && str[i] <= 'z')str[i] -= ' ';
+		if (str[i] >= 'а' && str[i] <= 'я')str[i] -= ' ';
+		if (str[i] == 'ё') str[i] = 'Ё';*/
 		str[i] = toupper(str[i]);
+		//Функция toupper(char s); принимает букву, и возвращает такую же заглавную букву.
 	}
 }
-
 void lower_case(char str[])
 {
 	for (int i = 0; str[i]; i++)
@@ -84,7 +80,6 @@ void lower_case(char str[])
 		str[i] = tolower(str[i]);
 	}
 }
-
 void shrink(char str[])
 {
 	for (int i = 0; str[i]; i++)
@@ -98,7 +93,6 @@ void shrink(char str[])
 		}
 	}
 }
-
 void remove_symbol(char str[], const char symbol)
 {
 	for (int i = 0; str[i]; i++)
